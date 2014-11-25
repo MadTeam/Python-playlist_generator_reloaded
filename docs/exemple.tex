@@ -1,0 +1,138 @@
+% Documentation avec latex2man
+%
+% Date    : $Date: 2012-11-15 16:01:16 +0100 (jeu. 15 nov. 2012) $
+% Auteur  : Gregory DAVID
+%%
+
+\documentclass[french]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+
+\usepackage{latex2man}
+
+%% avons-nous le package 'svn' ?
+\IfFileExists{svn.sty}{
+\usepackage{svn}
+\SVN $Id: main.tex 198 2012-11-15 15:01:16Z groolot $
+\SVN $Date: 2012-11-15 16:01:16 +0100 (jeu. 15 nov. 2012) $
+\SVN $Revision: 198 $
+\SVN $Author: groolot $
+\setDate{\SVNDate}
+\setVersion{\SVNRevision}
+}{
+%%%% sinon on definit la date a la main
+\message{PAS DE PACKAGE SVN}
+\setDate{15/11/2012}
+\setVersion{197}
+}
+
+\begin{document}
+
+\begin{Name}{1}{generateurPlaylist}{Grégory DAVID}{Générateur de playlist}{Un générateur de playlist}
+
+  \Prog{generateurPlaylist} est un outil permettant de générer des fichiers de playlist pour les lecteurs multimedia.
+  Sa documentation est fournie au moins en page de manuel accessible
+  à l'aide de la commande \Cmd{man}{1}.
+\end{Name}
+
+\section{Synopsis}
+%%%%%%%%%%%%%%%%%%
+
+\Prog{generateurPlaylist} \OptArg{-d}{dureetotale}
+                 \OptArg{--genre}{ youpi} \Arg{50}
+                 \oOpt{-h}
+                 \oOpt{-V}
+                 \Arg{sortieM3U}
+
+\Prog{generateurPlaylist}
+ \oOpt{-h}
+ \oOptArg{--log}{\{DEBUG,INFO,\emph{WARNING},ERROR,CRITICAL\}}
+
+
+ % --time TIME
+ %               [--output OUTPUT OUTPUT] [-g GENRE QUANTITY]
+ %               [-s SUB_GENRE QUANTITY] [-b BAND_NAME QUANTITY]
+ %               [-a ALBUM_NAME QUANTITY] [-t TRACK_TITLE QUANTITY]
+ %               [-G GENRE QUANTITY] [-S SUB_GENRE QUANTITY]
+ %               [-B BAND_NAME QUANTITY] [-A ALBUM_NAME QUANTITY]
+ %               [-T TRACK_TITLE QUANTITY]
+
+\section{Description}
+%%%%%%%%%%%%%%%%%%%%%
+\Prog{generateurPlaylist} sert à générer un fichier de playlist \File{sortieM3U} au format M3U afin de blablabla.
+
+La description des différentes options se trouve dans la section suivante.
+
+\section{Options}
+%%%%%%%%%%%%%%%%%
+% [-h] [--log {DEBUG,INFO,WARNING,ERROR,CRITICAL}] --time TIME
+%                [--output OUTPUT OUTPUT] [-g GENRE QUANTITY]
+%                [-s SUB_GENRE QUANTITY] [-b BAND_NAME QUANTITY]
+%                [-a ALBUM_NAME QUANTITY] [-t TRACK_TITLE QUANTITY]
+%                [-G GENRE QUANTITY] [-S SUB_GENRE QUANTITY]
+%                [-B BAND_NAME QUANTITY] [-A ALBUM_NAME QUANTITY]
+%                [-T TRACK_TITLE QUANTITY]
+
+\begin{Description}\setlength{\itemsep}{0cm}
+\item[\OptArg{-d}{dureetotale}] Specifie la durée totale que devra faire la playlist.
+\item[\OptArg{--genre}{"formatgenre"}] Permet de définir le ou les genres à prendre en compte. Le formalisme correspond à blablablabla.
+\item[\Opt{-h}] Affiche un message d'aide.
+\item[\Opt{-V}] Affiche les informations de version.
+\end{Description}
+
+\section{Fichiers}
+%%%%%%%%%%%%%%%
+
+\begin{Description}\setlength{\itemsep}{0cm}
+\item[\File{/usr/local/bin/generateurPlaylist}] Le programme principal.
+\item[\File{/etc/generateurPlaylist.cfg}] Le fichier de configuration du programme.
+\end{Description}
+
+\section{À voir aussi}
+%%%%%%%%%%%%%%%%%%
+
+\Cmd{vlc}{1}, \Cmd{mp3rename}{1}.
+
+\section{Traduction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+L'application a été écrite en langue anglaise, traduite en
+français. Nous recherchons des traducteurs dans les langues : English,
+German, Italian, Spanish, Russian, Chinese, Japanese.
+
+\section{Pré-requis}
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{description}\setlength{\itemsep}{0cm}
+\item[python] \Prog{generateurPlaylist} a besoin de \Prog{python} version $>=$ 2.7.
+\item[scons] Si vous souhaitez installer proprement l'application, il est intéressant
+     de disposer du programme \Prog{scons}.
+\end{description}
+
+\section{Version}
+%%%%%%%%%%%%%%%%%
+
+Version : \Version\ du \Date.
+
+\section{Licence et Copyright}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{description}
+\item[Copyright] \copyright\ 2012, Grégory DAVID, 3 rue Beau Soleil, 72700 Allonnes
+\item[Licence] Indiquer les termes succins de la licence d'utilisation.
+
+\item[Misc] If you find this software useful, please send me a postcard.
+\end{description}
+
+\section{Auteur}
+%%%%%%%%%%%%%%%%
+
+\noindent
+Grégory DAVID                      \\
+3 rue Beau Soleil                       \\
+72700 Allonnes                       \\
+Email: \Email{gregory.david@ac-nantes.fr}  \\
+WWW: \URL{http://www.bts-malraux72.net}.
+\LatexManEnd
+
+\end{document}
+

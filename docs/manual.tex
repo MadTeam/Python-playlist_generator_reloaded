@@ -1,0 +1,71 @@
+\documentclass[a4paper,notitlepage,11pt]{article}
+
+%packages
+\usepackage[utf8]{inputenc} %encodage en utf-8 pour la console UNIX
+\usepackage[french]{babel}
+\usepackage{latex2man} %importation du package permettant de générer un document LaTeX en manpage
+
+%options
+\pagestyle{plain} %imprime le num de la page
+
+\begin{document}
+
+\section{NOM}
+./main.py - générateur de playlist personnalisée
+
+\section{SYNOPSIS}
+main.py nom {xspf,m3u,pls} temps [OPTIONS]
+
+\section{DESCRIPTION}
+Ce générateur de playlist permet de générer un fichier dans un format spécial qui contient un ensemble de titres musicaux selon les choix de l'utilisateur.
+
+Voici l'utilisation basique du programme (sans options avancées), l'ensemble des options listées sont obligatoire pour générer la playlist.
+\begin{description}
+\item[commande -] il s'agit du nom du fichier qui sera exécuté pour utiliser le programme (".\textbackslash{}main.py")
+\item[nom -] nom du fichier de sortie (inutile de préciser l'extension, elle sera ajouter automatiquement selon l'option suivante)
+\item[format -] ajoute l'extension au fichier selon 3 choix possible (xspf, m3u ou pls)
+\item[temps -] permet de spécifier la durée totale de la playlist en minute
+\item['-h' '--help' '--aide' :] affiche l'aide
+\item['-v' '--verbeux' :] permet l'affichage détaillé des opérations (ces informations sont également disponible dans le fichier de log)
+note : le mode verbeux n'affiche pas grand chose s'il est envoyé seul.
+\end{description}
+
+\section{EXEMPLES}
+\begin{description}
+\item[".\textbackslash{}main.py play m3u 150" -] générera le fichier "play.m3u" qui contiendra une playlist d'une durée de 150 minutes.
+\item[".\textbackslash{}main.py -h" -] affiche l'aide (sans exécuter la génération de la playlist).
+\item[".\textbackslash{}main.py play m3u 150 --verbeux" -] affiche un ensemble d'information (particulièrement utiles pour les développeurs)
+\end{description}
+
+\section{OPTIONS}
+
+
+\section{FICHIERS}
+\begin{description}
+Le packet contient les fichiers suivants:
+\item[main.py -] programme principal
+\item[config.py -] fichier de configuration
+\item[playlist.log -] fichier de log (se remplit à l'utilisation)
+\item[docs/manual.pdf -] le présent manuel
+\end{description}
+
+\section{REQUIS}
+L'utilisation du générateur exige l'installation des applications suivantes :
+\begin{itemize}
+\item python3
+\item python-pycogs
+\item python3-sqlalchemy
+\end{itemize}
+
+\section{TRADUCTION}
+français
+
+\section{VERSION}
+version 1.0b
+
+\section{LICENCE}
+GPL v3
+
+\section{AUTEURS}
+
+\end{document}
