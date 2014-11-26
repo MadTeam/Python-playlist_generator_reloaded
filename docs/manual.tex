@@ -1,8 +1,8 @@
-\documentclass[a4paper,notitlepage,11pt]{article}
+\documentclass[french]{article}
 
 %packages
 \usepackage[utf8]{inputenc} %encodage en utf-8 pour la console UNIX
-\usepackage[french]{babel}
+\usepackage[francais]{babel}
 \usepackage{latex2man} %importation du package permettant de générer un document LaTeX en manpage
 
 %options
@@ -11,42 +11,71 @@
 \begin{document}
 
 \section{NOM}
-./main.py - générateur de playlist personnalisée
+\Prog{./main.py} - générateur de playlist personnalisée
 
 \section{SYNOPSIS}
-main.py nom {xspf,m3u,pls} temps [OPTIONS]
+%main.py nom {xspf | m3u | pls} temps [-h | --help | --aide] [-v | --verbeux]
+%temps(argument)
+%genre(option) "Rock"(argument) 75(argument)
+\Prog{main.py} \Arg{nom} \Arg{format=\{xpsf \Bar m3u \Bar pls\}} \oArg{-h \Bar --help \Bar --aide} \oArg{-v \Bar --verbeux} \oOpt{OPTIONS}
 
 \section{DESCRIPTION}
 Ce générateur de playlist permet de générer un fichier dans un format spécial qui contient un ensemble de titres musicaux selon les choix de l'utilisateur.
 
 Voici l'utilisation basique du programme (sans options avancées), l'ensemble des options listées sont obligatoire pour générer la playlist.
 \begin{description}
-\item[commande -] il s'agit du nom du fichier qui sera exécuté pour utiliser le programme (".\textbackslash{}main.py")
-\item[nom -] nom du fichier de sortie (inutile de préciser l'extension, elle sera ajouter automatiquement selon l'option suivante)
-\item[format -] ajoute l'extension au fichier selon 3 choix possible (xspf, m3u ou pls)
-\item[temps -] permet de spécifier la durée totale de la playlist en minute
-\item['-h' '--help' '--aide' :] affiche l'aide
-\item['-v' '--verbeux' :] permet l'affichage détaillé des opérations (ces informations sont également disponible dans le fichier de log)
-note : le mode verbeux n'affiche pas grand chose s'il est envoyé seul.
+\item[\Arg{nom}] nom du fichier de sortie (inutile de préciser l'extension, elle sera ajouter automatiquement selon l'option suivante)
+\item[\Arg{format}] ajoute l'extension au fichier selon 3 choix possible (xspf, m3u ou pls)
+\item[\Arg{temps}] permet de spécifier la durée totale de la playlist en minute
+\item[\oArg{-h \Bar --help \Bar --aide}] affiche l'aide
+\item[\oArg{-v \Bar --verbeux}] permet l'affichage détaillé des opérations (ces informations sont également disponible dans le fichier de log)
 \end{description}
+note : le mode verbeux n'affiche pas grand chose s'il est envoyé seul.
 
 \section{EXEMPLES}
 \begin{description}
-\item[".\textbackslash{}main.py play m3u 150" -] générera le fichier "play.m3u" qui contiendra une playlist d'une durée de 150 minutes.
-\item[".\textbackslash{}main.py -h" -] affiche l'aide (sans exécuter la génération de la playlist).
-\item[".\textbackslash{}main.py play m3u 150 --verbeux" -] affiche un ensemble d'information (particulièrement utiles pour les développeurs)
+\item[\Prog{.\Bs main.py play m3u 150} -] générera le fichier "play.m3u" qui contiendra une playlist d'une durée de 150 minutes.
+\item[\Prog{.\Bs main.py -h} -] affiche l'aide (sans exécuter la génération de la playlist).
+\item[\Prog{.\Bs main.py play m3u 150 --verbeux} -] affiche un ensemble d'information (particulièrement utiles pour les développeurs)
+\item[\Prog{.\Bs main.py play m3u 150 --genre Rock 75} -] générera une playlist contenant 75\% de 'rock'
 \end{description}
 
 \section{OPTIONS}
+Il est possible de personnaliser la playlist en choissisant des options (ex : genre musical, artiste, etc).
+Ces options sont cumulables tant qu'une même option ne dépasse pas les 100\%.
+Ces options prennent par défaut l'union des musiques trouvées (voir section suivante pour plus d'information).
+%genre,sousgenre,artiste,album,titre
+\begin{description}
+\item[\OptArg{-G \Bar --genre}{ description pourcentage}] le genre de la musique
+\item[\OptArg{-g \Bar --sousgenre}{ description pourcentage}] le sous-genre de la musique
+\item[\OptArg{-a \Bar --artiste}{ description pourcentage}] l'artiste de la musique
+\item[\OptArg{-A \Bar --album}{ description pourcentage}] l'album de la musique
+\item[\OptArg{-t \Bar --titre}{ description pourcentage}] le titre de la musique
+\end{description}
+note : la description de l'option accepte l'utilisation des expressions régulières (voir section suivante pour plus d'information).
 
+\section{UNION, INTERSECTION, REGEX}
+L'union correspond à l'ensemble de la recherche (OU inclusif), c'est le mode de recherche par défaut.\\
+ex : \Prog{.\Bs main.py blabla m3u 150 --genre Rock 50 --titre "Les Immortels" 75}\\
+cela générera une playlist contenant des musiques du genre 'rock' ou dont le titre est 'les immortels' ou encore les deux, cela fait donc que les résultats trouvés inclus les autres correspondances.
+\newline
+\newline
+L'intersection correspond à la correspondance de la recherche (OU exclusif), pour activer ce mode, il suffit d'ajouter le paramètre \{-i --intersection --and\}, cette syntaxe se rapproche d'une requête LID (\URL{http://sql.sh/cours/select})\\
+ex : \Prog{.\Bs main.py blabla m3u 150 --genre Rock 50 --and --titre "Les Immortels" 75}\\
+le résultat de la playlist sera une liste de musique dont le titre est 'les immortels' \underline{ET} dont le genre est le 'rock'.
+\newline
+\newline
+REGEX est l'acronyme de REGular EXpression (='expression régulière' dans la langue de Molière) (\URL{http://gery.flament.free.fr/Fr/Developpement/Regexp.php}), cela permet d'affiner une recherche sur une chaîne de caractère.\\
+ex : \Prog{.\Bs main.py blabla m3u 150 --genre "[Rr]ock" 50}\\
+permet d'obtenir la liste des musiques dont le libellé de genre contient 'rock' ou 'Rock'.
 
 \section{FICHIERS}
-\begin{description}
 Le packet contient les fichiers suivants:
-\item[main.py -] programme principal
-\item[config.py -] fichier de configuration
-\item[playlist.log -] fichier de log (se remplit à l'utilisation)
-\item[docs/manual.pdf -] le présent manuel
+\begin{description}
+\item[\File{main.py}] programme principal
+\item[\File{config.py}] fichier de configuration
+\item[\File{playlist.log}] fichier de log (se remplit à l'utilisation)
+\item[\File{docs/manual.pdf}] le présent manuel
 \end{description}
 
 \section{REQUIS}
@@ -58,7 +87,7 @@ L'utilisation du générateur exige l'installation des applications suivantes :
 \end{itemize}
 
 \section{TRADUCTION}
-français
+française
 
 \section{VERSION}
 version 1.0b
@@ -67,5 +96,7 @@ version 1.0b
 GPL v3
 
 \section{AUTEURS}
+Alexis LUCIEN\\
+Remi KAJACK
 
 \end{document}
